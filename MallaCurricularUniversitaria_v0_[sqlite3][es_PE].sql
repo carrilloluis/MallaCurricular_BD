@@ -29,3 +29,26 @@ CREATE TABLE IF NOT EXISTS [Malla Curricular Universitaria]
 	[estado] INTEGER UNSIGNED NOT NULL DEFAULT 7, -- Bits de control
 	PRIMARY KEY('id')
 ) WITHOUT RowId;
+
+DROP TABLE IF EXISTS [Cursos];
+CREATE TABLE IF NOT EXISTS [Cursos]
+(
+	[id] CHAR(36) NOT NULL,
+	[id del plan] CHAR(36) NOT NULL REFERENCES [Malla Curricular Universitaria](id),
+	[nivel académico] CHAR(3) NOT NULL, -- Nivel academico 001 pregrado, 002 postgrado
+	[ente académico] CHAR(36) NOT NULL, -- bachillerato, maestría, etc.
+	-- curso generales, especificos y de especialidad ?
+	[área curricular] CHAR(3) NOT NULL DEFAULT '000', 
+	[área de orientación] CHAR(3) NOT NULL DEFAULT '000',
+	[código del curso] VARCHAR(10) NOT NULL, -- código interno de la universidad
+	[código del curso sunedu] VARCHAR(16) NULL,
+	[tipo de curso] CHAR(4) NOT NULL, -- OE. ECG, OCG, EE
+	[denominación] VARCHAR(256) NOT NULL,
+	-- 0 indistinto / 1 flexible  / 2 rigido / 3 híbrido
+	[naturaleza del curso] INTEGER UNSIGNED NULL DEFAULT 0,
+	[ciclo] INTEGER UNSIGNED NOT NULL, -- I, II ... XII (medicina)
+	-- CREDITAJE European Credit Transfer and Accumulation System (ECTS)
+	[creditaje] DECIMAL (4, 2) NOT NULL, -- Nro de Creditos FLOAT(?)
+	[estado] INTEGER UNSIGNED NOT NULL DEFAULT 7, -- Bits de control
+	PRIMARY KEY([id])
+) WITHOUT RowId;
